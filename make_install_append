@@ -1,0 +1,24 @@
+install -d -m 755 %{buildroot}/usr/share/defaults/ceilometer
+install -p -D -m 644 etc/ceilometer/*.ini %{buildroot}/usr/share/defaults/ceilometer
+install -p -D -m 644 etc/ceilometer/*.yaml %{buildroot}/usr/share/defaults/ceilometer
+install -p -D -m 644 etc/ceilometer/*.json %{buildroot}/usr/share/defaults/ceilometer
+install -p -D -m 644 etc/ceilometer/*.conf %{buildroot}/usr/share/defaults/ceilometer
+
+install -d -m 755 %{buildroot}/usr/share/ceilometer/rootwrap.d
+mv %{buildroot}/usr/share/defaults/ceilometer/rootwrap.conf %{buildroot}/usr/share/ceilometer/
+install -p -D -m 640 etc/ceilometer/rootwrap.d/*.filters %{buildroot}/usr/share/ceilometer/rootwrap.d/
+
+install -d -m 750 %{buildroot}/usr/share/defaults/sudo/sudoers.d
+install -p -D -m 440 etc/sudoers.d/ceilometer.sudoers %{buildroot}/usr/share/defaults/sudo/sudoers.d/ceilometer
+
+install -m 0755 -d %{buildroot}/usr/share/httpd/cgi-bin/ceilometer
+cp ceilometer/api/app.wsgi %{buildroot}/usr/share/httpd/cgi-bin/ceilometer
+
+install -m 0755 -d %{buildroot}/usr/share/defaults/httpd/conf.d
+install -p -D -m 644 ceilometer-api.httpd %{buildroot}/usr/share/defaults/httpd/conf.d/ceilometer-api.template
+
+install -m 0755 -d %{buildroot}/usr/share/uwsgi/ceilometer
+install -p -D -m 644 api.ini %{buildroot}/usr/share/uwsgi/ceilometer
+
+install -m 0755 -d %{buildroot}/usr/share/nginx/conf.d
+install -p -D -m 644 ceilometer-api.nginx %{buildroot}/usr/share/nginx/conf.d/ceilometer-api.template

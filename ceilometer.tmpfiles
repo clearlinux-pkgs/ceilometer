@@ -1,0 +1,3 @@
+Z /etc/ceilometer/* 0640 root ceilometer
+z /etc/ceilometer 0750 root ceilometer
+d /var/log/ceilometer - ceilometer ceilometer - -

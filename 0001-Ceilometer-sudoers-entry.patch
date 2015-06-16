@@ -1,0 +1,21 @@
+From 06f48bacc505a5e34f71773de380c7a818963b28 Mon Sep 17 00:00:00 2001
+From: Victor Morales <victor.morales@intel.com>
+Date: Wed, 17 Jun 2015 17:46:47 -0500
+Subject: [PATCH] Ceilometer sudoers entry
+
+Signed-off-by: Victor Morales <victor.morales@intel.com>
+---
+ etc/sudoers.d/ceilometer.sudoers | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 etc/sudoers.d/ceilometer.sudoers
+
+diff --git a/etc/sudoers.d/ceilometer.sudoers b/etc/sudoers.d/ceilometer.sudoers
+new file mode 100644
+index 0000000..c94545c
+--- /dev/null
++++ b/etc/sudoers.d/ceilometer.sudoers
+@@ -0,0 +1 @@
++ceilometer ALL = (root) NOPASSWD: /usr/bin/ceilometer-rootwrap /usr/share/ceilometer/rootwrap.conf *
+-- 
+2.1.0
+

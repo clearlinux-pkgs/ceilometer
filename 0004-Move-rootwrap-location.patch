@@ -1,0 +1,26 @@
+From d7576517f69b6114055fad490d49b6af475b75cb Mon Sep 17 00:00:00 2001
+From: Victor Morales <victor.morales@intel.com>
+Date: Tue, 30 Jun 2015 15:13:40 -0500
+Subject: [PATCH] Move rootwrap location
+
+Signed-off-by: Victor Morales <victor.morales@intel.com>
+---
+ etc/ceilometer/rootwrap.conf | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/etc/ceilometer/rootwrap.conf b/etc/ceilometer/rootwrap.conf
+index c79065c..f97a1a2 100644
+--- a/etc/ceilometer/rootwrap.conf
++++ b/etc/ceilometer/rootwrap.conf
+@@ -4,7 +4,7 @@
+ [DEFAULT]
+ # List of directories to load filter definitions from (separated by ',').
+ # These directories MUST all be only writeable by root !
+-filters_path=/etc/ceilometer/rootwrap.d,/usr/share/ceilometer/rootwrap
++filters_path=/usr/share/ceilometer/rootwrap.d
+ 
+ # List of directories to search executables in, in case filters do not
+ # explicitely specify a full path (separated by ',')
+-- 
+2.1.0
+

@@ -1,0 +1,78 @@
+From 53d359c79f896a442191f92d34720b327f8b7d1a Mon Sep 17 00:00:00 2001
+From: Victor Morales <victor.morales@intel.com>
+Date: Wed, 14 Oct 2015 15:29:57 -0500
+Subject: [PATCH] Add support to httdp and nginx
+
+Signed-off-by: Victor Morales <victor.morales@intel.com>
+---
+ api.ini              |  9 +++++++++
+ ceilometer-api.httpd | 24 ++++++++++++++++++++++++
+ ceilometer-api.nginx |  9 +++++++++
+ 3 files changed, 42 insertions(+)
+ create mode 100644 api.ini
+ create mode 100644 ceilometer-api.httpd
+ create mode 100644 ceilometer-api.nginx
+
+diff --git a/api.ini b/api.ini
+new file mode 100644
+index 0000000..40d0f84
+--- /dev/null
++++ b/api.ini
+@@ -0,0 +1,9 @@
++[uwsgi]
++master = true
++processes = 3
++threads = 10
++protocol = uwsgi
++chdir = /usr/share/httpd/cgi-bin
++wsgi-file = ceilometer/app.wsgi
++uid = ceilometer
++gid = ceilometer
+diff --git a/ceilometer-api.httpd b/ceilometer-api.httpd
+new file mode 100644
+index 0000000..0a3f599
+--- /dev/null
++++ b/ceilometer-api.httpd
+@@ -0,0 +1,24 @@
++Listen 8777
++
++<VirtualHost *:8777>
++    WSGIDaemonProcess ceilometer-api processes=5 threads=1 user=ceilometer group=ceilometer display-name=%{GROUP}
++    WSGIProcessGroup ceilometer-api
++    WSGIScriptAlias / /usr/share/httpd/cgi-bin/ceilometer/app.wsgi
++    WSGIApplicationGroup %{GLOBAL}
++    WSGIPassAuthorization On
++    <IfVersion >= 2.4>
++      ErrorLogFormat "%{cu}t %M"
++    </IfVersion>
++    ErrorLog /var/log/httpd/ceilometer-api-error_log
++    CustomLog /var/log/httpd/ceilometer-api-access_log combined
++
++    <Directory /usr/local/bin>
++        <IfVersion >= 2.4>
++            Require all granted
++        </IfVersion>
++        <IfVersion < 2.4>
++            Order allow,deny
++            Allow from all
++        </IfVersion>
++    </Directory>
++</VirtualHost>
+diff --git a/ceilometer-api.nginx b/ceilometer-api.nginx
+new file mode 100644
+index 0000000..8172f29
+--- /dev/null
++++ b/ceilometer-api.nginx
+@@ -0,0 +1,9 @@
++server {
++       listen 8777;
++       server_name localhost;
++       location / {
++                       include uwsgi_params;
++                       uwsgi_pass unix:/run/uwsgi/ceilometer/api.sock;
++                       uwsgi_param SCRIPT_NAME '';
++       }
++}
+-- 
+2.1.0
+

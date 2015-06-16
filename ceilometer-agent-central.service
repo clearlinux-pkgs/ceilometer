@@ -1,0 +1,12 @@
+[Unit]
+Description=OpenStack ceilometer polling agent
+After=syslog.target network.target
+
+[Service]
+Type=notify
+User=ceilometer
+ExecStart=/usr/bin/ceilometer-polling --polling-namespaces central
+
+[Install]
+WantedBy=multi-user.target
+

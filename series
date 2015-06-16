@@ -1,0 +1,5 @@
+0001-Ceilometer-sudoers-entry.patch
+0002-Added-default-configuration-file.patch
+0003-Enable-systemd-notification.patch
+0004-Move-rootwrap-location.patch
+0005-Add-support-to-httdp-and-nginx.patch
