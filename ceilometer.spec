@@ -4,7 +4,7 @@
 #
 Name     : ceilometer
 Version  : 6.0.0
-Release  : 38
+Release  : 39
 URL      : http://tarballs.openstack.org/ceilometer/ceilometer-6.0.0.tar.gz
 Source0  : http://tarballs.openstack.org/ceilometer/ceilometer-6.0.0.tar.gz
 Source1  : ceilometer-agent-central.service
